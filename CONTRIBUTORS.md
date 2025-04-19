@@ -1,6 +1,6 @@
 # Contributing & Local Development
 
-This document outlines how to set up the Elasticsearch Documentation Manager MCP Server for local development and debugging. For standard usage instructions, please refer to the main [README.md](readme.md).
+This document outlines how to set up the Elasticsearch Knowledge Base MCP Server for local development and debugging. For standard usage instructions, please refer to the main [README.md](readme.md).
 
 ## Prerequisites
 
@@ -13,15 +13,15 @@ This document outlines how to set up the Elasticsearch Documentation Manager MCP
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/strawgate/es-documentation-manager-mcp.git
+    git clone https://github.com/strawgate/es-knowledge-base-mcp.git
     ```
 2.  **Navigate to the project directory:**
     ```bash
-    cd es-documentation-manager-mcp
+    cd es-knowledge-base-mcp
     ```
 3.  **Install dependencies using `uv`:**
     ```bash
-    uv sync
+    uv sync --extra dev
     ```
 
 ## Local Configuration & Running
@@ -50,7 +50,7 @@ ES_PIPELINE="your-ingest-pipeline-name"
 MCP_TRANSPORT="sse"
 
 # --- Optional Settings ---
-# ES_INDEX_PREFIX="docsmcp" # Prefix for created indices (default: "docsmcp")
+# ES_INDEX_PREFIX="kbmcp" # Prefix for created indices (default: "kbmcp")
 # CRAWLER_IMAGE="ghcr.io/strawgate/es-crawler:main" # Crawler image to use (default: ghcr.io/strawgate/es-crawler:main)
 ```
 
@@ -59,7 +59,7 @@ MCP_TRANSPORT="sse"
 With the environment variables set (either exported in your shell or defined in `.env`), run the server using `uv`:
 
 ```bash
-uv run python esdocmanagermcp/server.py
+uv run python es_knowledge_base_mcp/server.py
 ```
 
 This command executes the `main()` function within the `server.py` script. The server will start and listen for MCP connections based on the `MCP_TRANSPORT` setting.
@@ -71,16 +71,16 @@ If you want to test the locally running server with your MCP host (e.g., Roo VS 
 ```json
 {
   "mcpServers": {
-    "esdocmanagermcp-local": { // Use a distinct name like "-local"
+    "es_knowledge_base_mcp-local": { // Use a distinct name like "-local"
       "command": "uv",
       "args": [
         "run",
         "--directory",
-        "/absolute/path/to/your/cloned/es-documentation-manager-mcp", // <-- IMPORTANT: Update this path
+        "/absolute/path/to/your/cloned/es-knowledge-base-mcp", // <-- IMPORTANT: Update this path
         "python",
-        "esdocmanagermcp/server.py"
+        "es_knowledge_base_mcp/server.py"
       ],
-      "cwd": "/absolute/path/to/your/cloned/es-documentation-manager-mcp", // <-- IMPORTANT: Update this path
+      "cwd": "/absolute/path/to/your/cloned/es-knowledge-base-mcp", // <-- IMPORTANT: Update this path
       "env": {
         "ES_HOST": "https://YOUR_ELASTICSEARCH_HOST_URL:443",
         // --- Authentication: Provide EITHER API Key
@@ -91,19 +91,20 @@ If you want to test the locally running server with your MCP host (e.g., Roo VS 
 
         "MCP_TRANSPORT": "sse"
       },
-      "alwaysAllow": [
-        "get_documentation_types",
-        "pull_crawler_image",
-        "crawl_domains",
-        "list_crawls",
-        "get_crawl_status",
-        "get_crawl_logs",
-        "stop_crawl",
-        "remove_completed_crawls",
-        "search_specific_documentation",
-        "search_all_documentation",
-        "get_document_by_url",
-        "get_document_by_title"
+      "alwaysAllow": [ // Example: Allow all tools for local dev
+        "get",
+        "get_by_id_or_name",
+        "update",
+        "update_name",
+        "update_description",
+        "delete",
+        "from_web_documentation",
+        "from_web_documentation_request",
+        "from_web_documentation_requests",
+        "from_thought",
+        "from_thoughts",
+        "questions",
+        "questions_for_kb"
       ],
       "disabled": false
     }

@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Install dependencies",
+      "type": "shell",
+      "command": "make install",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Lint (ruff check --fix and format)",
+      "type": "shell",
+      "command": "make lint",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Test (pytest)",
+      "type": "shell",
+      "command": "make test",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Smoke Test (CLI --help)",
+      "type": "shell",
+      "command": "make smoke-test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Check (ruff check and pytest)",
+      "type": "shell",
+      "command": "make check",
+      "problemMatcher": []
+    },
+    {
+      "label": "Format (ruff format)",
+      "type": "shell",
+      "command": "make format",
+      "problemMatcher": []
+    },
+    {
+      "label": "Inspector (run-mcp-inspector.sh)",
+      "type": "shell",
+      "command": "make inspector",
+      "problemMatcher": []
+    },
+    {
+      "label": "All (lint and test)",
+      "type": "shell",
+      "command": "make all",
+      "problemMatcher": []
+    }
+  ]
+}

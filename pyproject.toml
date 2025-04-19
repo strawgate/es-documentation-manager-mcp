@@ -1,21 +1,24 @@
 [project]
-name = "esdocmanagermcp"
+name = "es-knowledge-base-mcp"
 version = "0.1.0"
 description = "An MCP server for crawling documentation, writing it to Elasticsearch for vector search retrieval by an LLM."
 authors = [
     {name = "Bill Easton",email = "williamseaston@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.13,<4.0"
 dependencies = [
     "elasticsearch (>=8.17.2,<9.0.0)",
     "pyyaml>=6.0.2,<7.0.0",
     "anyio (>=4.9.0,<5.0.0)",
-    "fastmcp>=0.4.1",
+    "fastmcp>=2.1.2",
     "aiohttp>=3.11.14",
     "pydantic-settings>=2.3.4,<3.0.0",
     "aiodocker>=0.24.0",
     "pydantic>=2.0.0,<3.0.0",
+    "asyncio (>=3.4.3,<4.0.0)",
+    "requests>=2.32.3,<3.0.0",
+    "beautifulsoup4>=4.12.3,<5.0.0",
 ]
 
 
@@ -24,7 +27,7 @@ requires = ["poetry-core>=2.0.0,<3.0.0","pip"]
 build-backend = "poetry.core.masonry.api" 
 
 [project.scripts]
-esdocmanagermcp = "esdocmanagermcp.server:main"
+es-knowledge-base-mcp = "es_knowledge_base_mcp.server:run"
 
 [project.optional-dependencies]
 dev = [
@@ -33,12 +36,16 @@ dev = [
     "pytest-asyncio>=0.26.0,<0.27.0",
 ]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 [tool.poetry]
 packages = [
-    { include = "esdocmanagermcp" },
-    { include = "esdocmanagermcp/**/*.py" },
+    { include = "es_knowledge_base_mcp", from = "src" },
 ]
 
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.11.5"
 
 [tool.ruff]
-line-length = 120
+line-length = 140

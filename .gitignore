@@ -9,3 +9,5 @@ run-mcp.sh
 __pycache__
 references
 .env
+.roo
+archive

@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install uv
+        run: |
+          pip install uv
+
+      - name: Install project dependencies
+        run: |
+          uv sync
+
+      - name: Run check (ruff check and pytest)
+        run: make check
+
+      - name: Run smoke test
+        run: make smoke-test
